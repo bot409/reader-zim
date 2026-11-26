@@ -42,7 +42,7 @@
         <script type="text/javascript" src="js/theme-init.js"></script>
         <!-- Bootstrap -->
         <link rel="manifest" href="../manifest.webmanifest" />
-        <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
         <!-- Local app.css must be loaded after boostrap.css so that any local style overrides work -->
         <link rel="stylesheet" href="css/app.css"/>
         <link rel="stylesheet" href="css/transition.css"/>
@@ -868,7 +868,7 @@
         the jQuery it depends on needs to be loaded. See kiwix-js #1233.
     -->
     <script type="text/javascript" src="js/init.js"></script>
-    <script type="module" defer src="js/app.js"></script>
-    <!-- <script type="text/javascript" defer src="js/bundle.js"></script> -->
+    <!-- <script type="module" defer src="js/app.js"></script> -->
+    <script type="text/javascript" defer src="js/bundle.min.js"></script>
 </body>
 </html>
