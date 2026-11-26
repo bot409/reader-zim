@@ -62,7 +62,7 @@ jobs:
               ('"short_name": "Kiwix JS"', '"short_name": "ZIM"'),
               ('"lang": "en-GB"', '"lang": "he"'),
               ('"background_color": "#000"', '"background_color": "#f5f7fa"'),
-              ('"description": "Kiwix is your gateway for offline access to vast web resources like Wikipedia, Stackexchange, Project Gutenberg, TED Talks, and much more. These resources are\\npackaged as highly compressed ZIM archives available for free from Kiwix."', '"description": "קורא עצמאי לארכיוני ZIM עם ממשק עברי."')
+              ('"description": "Kiwix is an offline reader for content from Wikipedia, Project Gutenberg, TED Talks, Wikivoyage, Stackexchange, and many other Web archives. It makes knowledge available to people with limited or no Internet access."', '"description": "קורא עצמאי לארכיוני ZIM עם ממשק עברי."')
           ])
           PY
 
