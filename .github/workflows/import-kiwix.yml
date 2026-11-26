@@ -42,8 +42,8 @@ jobs:
           edit('www/index.html', [
               ('<html>', '<html lang="he" dir="rtl">'),
               ('<a id="appVersion" class="navbar-brand">Kiwix</a>', '<a id="appVersion" class="navbar-brand">קורא ZIM</a>'),
-              ('<option class="dropdown-item" href="#" value="en">English</a>', '<option class="dropdown-item" href="#" value="en">English</a>\\n                                <option class="dropdown-item" value="he">עברית</option>'),
-              ('    </head>', '        <link rel="stylesheet" href="css/custom.css"/>\\n    </head>')
+              ('<option class="dropdown-item" href="#" value="en">English</a>', '<option class="dropdown-item" href="#" value="en">English</a>\n                                <option class="dropdown-item" value="he">עברית</option>'),
+              ('    </head>', '        <link rel="stylesheet" href="css/custom.css"/>\n    </head>')
           ])
           edit('www/js/init.js', [
               ("params['overrideBrowserLanguage'] = getSetting('languageOverride');", "params['overrideBrowserLanguage'] = getSetting('languageOverride') || 'he';")
