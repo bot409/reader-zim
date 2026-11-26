@@ -44,8 +44,8 @@ jobs:
               ('<title>Kiwix</title>', '<title>קורא ZIM</title>'),
               ('<meta name="description" content="Offline Wikipedia reader">', '<meta name="description" content="קורא עצמאי לארכיוני ZIM">'),
               ('<a id="appVersion" class="navbar-brand">Kiwix</a>', '<a id="appVersion" class="navbar-brand">קורא ZIM</a>'),
-              ('<option class="dropdown-item" href="#" value="en">English</a>', '<option class="dropdown-item" href="#" value="en">English</a>\\n                                <option class="dropdown-item" value="he">עברית</option>'),
-              ('    </head>', '        <link rel="stylesheet" href="css/custom.css"/>\\n    </head>')
+              ('<option class="dropdown-item" href="#" value="en">English</a>', '<option class="dropdown-item" href="#" value="en">English</a>\n                                <option class="dropdown-item" value="he">עברית</option>'),
+              ('    </head>', '        <link rel="stylesheet" href="css/custom.css"/>\n    </head>')
           ])
           edit('www/js/init.js', [
               ("params['overrideBrowserLanguage'] = getSetting('languageOverride');", "params['overrideBrowserLanguage'] = getSetting('languageOverride') || 'he';")
@@ -54,7 +54,7 @@ jobs:
               ('/^(?:en|es|fr)$/.test(defaultBrowserLanguage.base)', '/^(?:en|es|fr|he)$/.test(defaultBrowserLanguage.base)')
           ])
           edit('www/js/lib/translateUI.js', [
-              ("return util.getJSONPObject('../i18n/' + langCode + '.jsonp.js')", "var translationDir = window.location.pathname.indexOf('/www/') >= 0 ? '../i18n/' : 'i18n/';\\n    return util.getJSONPObject(translationDir + langCode + '.jsonp.js')")
+              ("return util.getJSONPObject('../i18n/' + langCode + '.jsonp.js')", "var translationDir = window.location.pathname.indexOf('/www/') >= 0 ? '../i18n/' : 'i18n/';\n    return util.getJSONPObject(translationDir + langCode + '.jsonp.js')")
           ])
           edit('service-worker.js', [
               ("'i18n/fr.jsonp.js',", "'i18n/fr.jsonp.js', 'i18n/he.jsonp.js',"),
