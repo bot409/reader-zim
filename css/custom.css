@@ -35,7 +35,7 @@ body { font-family: Arial, "Noto Sans Hebrew", sans-serif; }
 .view-content .btn { border-radius: 9px; }
 .view-content .btn-primary, #searchArticles.btn-primary { background: var(--zim-accent); border-color: var(--zim-accent); }
 .view-content input, .view-content select, .view-content textarea { border-color: var(--zim-border); border-radius: 9px; }
-#configure, #about { direction: rtl; text-align: right; }
+#configuration, #about { direction: rtl; text-align: right; }
 #languageSelector { float: left; min-width: 140px; }
 #search-article .view-content { text-align: right; }
 #search-article iframe { direction: ltr; }
