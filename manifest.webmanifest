@@ -1,11 +1,11 @@
 {
-    "name": "Kiwix JS Browser Extension",
-    "short_name": "Kiwix JS",
+    "name": "קורא ZIM",
+    "short_name": "ZIM",
     "categories": ["reference", "books", "education"],
     "start_url": ".",
-    "description": "Kiwix is an offline reader for content from Wikipedia, Project Gutenberg, TED Talks, Wikivoyage, Stackexchange, and many other Web archives. It makes knowledge available to people with limited or no Internet access.",
-    "lang": "en-GB",
-    "background_color": "#000",
+    "description": "קורא עצמאי לארכיוני ZIM, עם ממשק עברי ותמיכה בקריאה ללא חיבור לאינטרנט.",
+    "lang": "he",
+    "background_color": "#f5f7fa",
     "icons": [
         {
           "src": "www/img/icons/kiwix_favicon.svg",
