@@ -57,6 +57,13 @@ jobs:
           edit('service-worker.js', [
               ("'i18n/fr.jsonp.js',", "'i18n/fr.jsonp.js', 'i18n/he.jsonp.js',")
           ])
+          edit('manifest.webmanifest', [
+              ('"name": "Kiwix JS Browser Extension"', '"name": "קורא ZIM"'),
+              ('"short_name": "Kiwix JS"', '"short_name": "ZIM"'),
+              ('"lang": "en-GB"', '"lang": "he"'),
+              ('"background_color": "#000"', '"background_color": "#f5f7fa"'),
+              ('"description": "Kiwix is your gateway for offline access to vast web resources like Wikipedia, Stackexchange, Project Gutenberg, TED Talks, and much more. These resources are\\npackaged as highly compressed ZIM archives available for free from Kiwix."', '"description": "קורא עצמאי לארכיוני ZIM עם ממשק עברי."')
+          ])
           PY
 
       - name: Install dependencies and build
