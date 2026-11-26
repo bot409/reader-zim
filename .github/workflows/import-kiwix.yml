@@ -52,7 +52,7 @@ jobs:
               ('/^(?:en|es|fr)$/.test(defaultBrowserLanguage.base)', '/^(?:en|es|fr|he)$/.test(defaultBrowserLanguage.base)')
           ])
           edit('www/js/lib/translateUI.js', [
-              ("return util.getJSONPObject('../i18n/' + langCode + '.jsonp.js')", "var translationDir = window.location.pathname.indexOf('/www/') >= 0 ? '../i18n/' : 'i18n/';\\n    return util.getJSONPObject(translationDir + langCode + '.jsonp.js')")
+              ("return util.getJSONPObject('../i18n/' + langCode + '.jsonp.js')", "var translationDir = window.location.pathname.indexOf('/www/') >= 0 ? '../i18n/' : 'i18n/';\n    return util.getJSONPObject(translationDir + langCode + '.jsonp.js')")
           ])
           edit('service-worker.js', [
               ("'i18n/fr.jsonp.js',", "'i18n/fr.jsonp.js', 'i18n/he.jsonp.js',")
