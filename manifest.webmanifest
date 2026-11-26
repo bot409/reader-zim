@@ -3,7 +3,7 @@
     "short_name": "ZIM",
     "categories": ["reference", "books", "education"],
     "start_url": ".",
-    "description": "קורא עצמאי לארכיוני ZIM, עם ממשק עברי ותמיכה בקריאה ללא חיבור לאינטרנט.",
+    "description": "קורא עצמאי לארכיוני ZIM עם ממשק עברי.",
     "lang": "he",
     "background_color": "#f5f7fa",
     "icons": [

@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
 
-        <title>קורא ZIM</title>
-        <meta name="description" content="קורא עצמאי לארכיוני ZIM">
+        <title>Kiwix</title>
+        <meta name="description" content="Offline Wikipedia reader">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- NB img-src repeats the default-src list so that https://ftp.fau.de, which is needed only for the
              params.altLibraryProbe reachability check in kiwixLibrary.js, is authorized for images and nothing else -->
@@ -50,7 +50,6 @@
         <link rel="icon" type="image/png" href="img/icons/kiwix-60.png" sizes="60x60"/>
         <link rel="icon" type="image/png" href="img/icons/kiwix-120.png" sizes="120x120"/>
         <link rel="icon" type="image/png" href="img/icons/kiwix-256.png" sizes="256x256"/>
-        <link rel="stylesheet" href="css/custom.css"/>
         <link rel="stylesheet" href="css/custom.css"/>
     </head>
     <body role="application">
@@ -480,7 +479,6 @@
                                 <option data-i18n="configure-language-selector-default" selected class="dropdown-item" href="#" value="default">Language</a>
                                 <option class="dropdown-item" href="#" value="en">English</a>
                                 <option class="dropdown-item" value="he">עברית</option>
-                                <option class="dropdown-item" value="he">עברית</option>
                                 <option class="dropdown-item" href="#" value="fr">Français</a>
                                 <option class="dropdown-item" href="#" value="es">Español</a>
                                 <option data-i18n="configure-language-selector-other" class="dropdown-item" href="#" value="other">More coming soon...!</a>
@@ -870,7 +868,6 @@
         the jQuery it depends on needs to be loaded. See kiwix-js #1233.
     -->
     <script type="text/javascript" src="js/init.js"></script>
-    <script>if (window.params) { params.overrideBrowserLanguage = params.overrideBrowserLanguage || "he"; }</script>
     <!-- <script type="module" defer src="js/app.js"></script> -->
     <script type="text/javascript" defer src="js/bundle.min.js"></script>
 </body>

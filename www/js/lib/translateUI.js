@@ -45,7 +45,8 @@ function loadTranslationStrings (langCode) {
     if (!/^[a-zA-Z]{2,4}$/.test(langCode)) {
         return Promise.reject(new Error('Invalid language code: ' + langCode));
     }
-    return util.getJSONPObject('../i18n/' + langCode + '.jsonp.js').then(function (translations) {
+    var translationDir = window.location.pathname.indexOf('/www/') >= 0 ? '../i18n/' : 'i18n/';
+    return util.getJSONPObject(translationDir + langCode + '.jsonp.js').then(function (translations) {
         currentLanguage = translations[langCode]['translation'];
         // i18next.init({
         //     lng: langCode, // if you're using a language detector, do not define the lng option
