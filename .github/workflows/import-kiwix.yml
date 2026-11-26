@@ -1,0 +1,56 @@
+name: Import and build Kiwix JS
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/import-kiwix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this project
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Download official Kiwix JS source
+        run: |
+          git clone --depth 1 https://github.com/kiwix/kiwix-js.git /tmp/kiwix-js
+          rsync -a --delete --exclude='.git' --exclude='.github/' /tmp/kiwix-js/ ./ 
+
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build-min
+
+      - name: Publish standalone site files to repository root
+        run: |
+          cp -a dist/www/. ./
+          cp -a dist/i18n ./i18n
+          cp -f dist/service-worker.js ./service-worker.js
+          cp -f dist/manifest.webmanifest ./manifest.webmanifest
+          cp -f dist/LICENSE-GPLv3.txt ./LICENSE-GPLv3.txt
+          cat > README-LOCAL.md <<'EOF'
+          # Kiwix JS - local project copy
+
+          This repository contains a self-hosted build of the official Kiwix JS project.
+          Upstream source: https://github.com/kiwix/kiwix-js
+          Upstream license: GNU GPL v3 (see LICENSE-GPLv3.txt).
+
+          The site is built from the upstream source by GitHub Actions. ZIM archives are selected locally in the browser; they are not uploaded to this repository.
+          EOF
+
+      - name: Commit imported source and built site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Import and build official Kiwix JS"
+            git push
+          fi
