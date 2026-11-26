@@ -1,7 +1,16 @@
-# Kiwix JS - local project copy
+# קורא ZIM
 
-This repository contains a self-hosted build of the official Kiwix JS project.
-Upstream source: https://github.com/kiwix/kiwix-js
-Upstream license: GNU GPL v3 (see LICENSE-GPLv3.txt).
+קורא עצמאי לקובצי ZIM, המבוסס על מנוע Kiwix JS ומותאם לממשק עברי.
 
-The site is built from the upstream source by GitHub Actions. ZIM archives are selected locally in the browser; they are not uploaded to this repository.
+- בחירת קובצי ZIM מקומיים בדפדפן.
+- חיפוש וקריאת ערכים מתוך הארכיון.
+- ממשק עברי מימין לשמאל.
+- הקבצים נפתחים בדפדפן ואינם מועלים לריפו.
+
+## מקור ורישיון
+
+המנוע מבוסס על [Kiwix JS](https://github.com/kiwix/kiwix-js) ומופץ תחת GPL v3. פרטי הרישיון נמצאים בקובץ `LICENSE-GPLv3.txt`.
+
+## שימוש
+
+יש לפתוח את האתר, לבחור קובץ ZIM מהמחשב ולהתחיל לקרוא.
