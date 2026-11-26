@@ -21,7 +21,40 @@ jobs:
       - name: Download official Kiwix JS source
         run: |
           git clone --depth 1 https://github.com/kiwix/kiwix-js.git /tmp/kiwix-js
-          rsync -a --delete --exclude='.git' --exclude='.github/' /tmp/kiwix-js/ ./ 
+          rsync -a --delete --exclude='.git' --exclude='.github/' --exclude='.custom/' /tmp/kiwix-js/ ./
+
+      - name: Apply local Hebrew interface
+        run: |
+          cp .custom/he.jsonp.js i18n/he.jsonp.js
+          cp .custom/custom.css www/css/custom.css
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def edit(path, replacements):
+              p = Path(path)
+              s = p.read_text(encoding='utf-8')
+              for old, new in replacements:
+                  if old not in s:
+                      raise SystemExit(f'Expected text not found in {path}: {old[:100]!r}')
+                  s = s.replace(old, new, 1)
+              p.write_text(s, encoding='utf-8')
+
+          edit('www/index.html', [
+              ('<html>', '<html lang="he" dir="rtl">'),
+              ('<a id="appVersion" class="navbar-brand">Kiwix</a>', '<a id="appVersion" class="navbar-brand">קורא ZIM</a>'),
+              ('<option class="dropdown-item" href="#" value="en">English</a>', '<option class="dropdown-item" href="#" value="en">English</a>\\n                                <option class="dropdown-item" value="he">עברית</option>'),
+              ('    </head>', '        <link rel="stylesheet" href="css/custom.css"/>\\n    </head>')
+          ])
+          edit('www/js/init.js', [
+              ("params['overrideBrowserLanguage'] = getSetting('languageOverride');", "params['overrideBrowserLanguage'] = getSetting('languageOverride') || 'he';")
+          ])
+          edit('www/js/app.js', [
+              ('/^(?:en|es|fr)$/.test(defaultBrowserLanguage.base)', '/^(?:en|es|fr|he)$/.test(defaultBrowserLanguage.base)')
+          ])
+          edit('service-worker.js', [
+              ('"i18n/fr.jsonp.js",', '"i18n/fr.jsonp.js", "i18n/he.jsonp.js",')
+          ])
+          PY
 
       - name: Install dependencies and build
         run: |
