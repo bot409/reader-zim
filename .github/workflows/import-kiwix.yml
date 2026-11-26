@@ -1,4 +1,4 @@
-name: Import and build Kiwix JS
+name: Build Hebrew ZIM Reader
 
 on:
   workflow_dispatch:
@@ -10,24 +10,23 @@ permissions:
   contents: write
 
 jobs:
-  import-build:
-    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, 'Import and build official Kiwix JS')
+  build:
+    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, 'Build standalone ZIM reader')
     runs-on: ubuntu-latest
     steps:
-      - name: Check out this project
+      - name: Check out the project
         uses: actions/checkout@v4
         with:
           persist-credentials: true
 
       - name: Download official Kiwix JS source
-        run: |
-          git clone --depth 1 https://github.com/kiwix/kiwix-js.git /tmp/kiwix-js
-          rsync -a --delete --exclude='.git' --exclude='.github/' --exclude='.custom/' /tmp/kiwix-js/ ./
+        run: git clone --depth 1 https://github.com/kiwix/kiwix-js.git /tmp/kiwix-js
 
-      - name: Apply local Hebrew interface
+      - name: Apply Hebrew interface to upstream source
         run: |
-          cp .custom/he.jsonp.js i18n/he.jsonp.js
-          cp .custom/custom.css www/css/custom.css
+          cp .custom/he.jsonp.js /tmp/kiwix-js/i18n/he.jsonp.js
+          cp .custom/custom.css /tmp/kiwix-js/www/css/custom.css
+          cd /tmp/kiwix-js
           python3 - <<'PY'
           from pathlib import Path
 
@@ -45,8 +44,8 @@ jobs:
               ('<title>Kiwix</title>', '<title>קורא ZIM</title>'),
               ('<meta name="description" content="Offline Wikipedia reader">', '<meta name="description" content="קורא עצמאי לארכיוני ZIM">'),
               ('<a id="appVersion" class="navbar-brand">Kiwix</a>', '<a id="appVersion" class="navbar-brand">קורא ZIM</a>'),
-              ('<option class="dropdown-item" href="#" value="en">English</a>', '<option class="dropdown-item" href="#" value="en">English</a>\n                                <option class="dropdown-item" value="he">עברית</option>'),
-              ('    </head>', '        <link rel="stylesheet" href="css/custom.css"/>\n    </head>')
+              ('<option class="dropdown-item" href="#" value="en">English</a>', '<option class="dropdown-item" href="#" value="en">English</a>\\n                                <option class="dropdown-item" value="he">עברית</option>'),
+              ('    </head>', '        <link rel="stylesheet" href="css/custom.css"/>\\n    </head>')
           ])
           edit('www/js/init.js', [
               ("params['overrideBrowserLanguage'] = getSetting('languageOverride');", "params['overrideBrowserLanguage'] = getSetting('languageOverride') || 'he';")
@@ -55,10 +54,11 @@ jobs:
               ('/^(?:en|es|fr)$/.test(defaultBrowserLanguage.base)', '/^(?:en|es|fr|he)$/.test(defaultBrowserLanguage.base)')
           ])
           edit('www/js/lib/translateUI.js', [
-              ("return util.getJSONPObject('../i18n/' + langCode + '.jsonp.js')", "var translationDir = window.location.pathname.indexOf('/www/') >= 0 ? '../i18n/' : 'i18n/';\n    return util.getJSONPObject(translationDir + langCode + '.jsonp.js')")
+              ("return util.getJSONPObject('../i18n/' + langCode + '.jsonp.js')", "var translationDir = window.location.pathname.indexOf('/www/') >= 0 ? '../i18n/' : 'i18n/';\\n    return util.getJSONPObject(translationDir + langCode + '.jsonp.js')")
           ])
           edit('service-worker.js', [
-              ("'i18n/fr.jsonp.js',", "'i18n/fr.jsonp.js', 'i18n/he.jsonp.js',")
+              ("'i18n/fr.jsonp.js',", "'i18n/fr.jsonp.js', 'i18n/he.jsonp.js',"),
+              ("'www/css/transition.css',", "'www/css/transition.css', 'www/css/custom.css', 'css/custom.css',")
           ])
           edit('manifest.webmanifest', [
               ('"name": "Kiwix JS Browser Extension"', '"name": "קורא ZIM"'),
@@ -69,34 +69,33 @@ jobs:
           ])
           PY
 
-      - name: Install dependencies and build
+      - name: Build the standalone app
+        working-directory: /tmp/kiwix-js
         run: |
           npm ci
           npm run build-min
 
-      - name: Publish standalone site files to repository root
+      - name: Keep only deployable files
         run: |
-          cp -a dist/www/. ./
-          cp -a dist/i18n ./i18n
-          cp -f dist/service-worker.js ./service-worker.js
-          cp -f dist/manifest.webmanifest ./manifest.webmanifest
-          cp -f dist/LICENSE-GPLv3.txt ./LICENSE-GPLv3.txt
-          cat > README-LOCAL.md <<'EOF'
-          # Kiwix JS - local project copy
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .github ! -name .custom ! -name README-LOCAL.md -exec rm -rf {} +
+          mkdir -p www
+          cp -a /tmp/kiwix-js/dist/www/. ./
+          cp -a /tmp/kiwix-js/dist/www/. ./www/
+          cp -a /tmp/kiwix-js/dist/i18n ./i18n
+          cp -f /tmp/kiwix-js/dist/service-worker.js ./service-worker.js
+          cp -f /tmp/kiwix-js/dist/manifest.webmanifest ./manifest.webmanifest
+          cp -f /tmp/kiwix-js/dist/manifest.json ./manifest.json
+          cp -f /tmp/kiwix-js/dist/replayWorker.js ./replayWorker.js
+          cp -f /tmp/kiwix-js/dist/LICENSE-GPLv3.txt ./LICENSE-GPLv3.txt
+          cp README-LOCAL.md README.md
+          rm README-LOCAL.md
 
-          This repository contains a self-hosted build of the official Kiwix JS project.
-          Upstream source: https://github.com/kiwix/kiwix-js
-          Upstream license: GNU GPL v3 (see LICENSE-GPLv3.txt).
-
-          The site is built from the upstream source by GitHub Actions. ZIM archives are selected locally in the browser; they are not uploaded to this repository.
-          EOF
-
-      - name: Commit imported source and built site
+      - name: Commit deployable app
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "Import and build official Kiwix JS"
+            git commit -m "Build standalone ZIM reader"
             git push
           fi
