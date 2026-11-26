@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>ZIM Reader</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101827;color:#e8eef8;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{height:100%;display:flex;flex-direction:column}
+    header{height:48px;flex:0 0 48px;display:flex;align-items:center;gap:10px;padding:0 16px;background:#172338;border-bottom:1px solid #293950}
+    .mark{width:25px;height:25px;border-radius:7px;background:#4f8cff;display:grid;place-items:center;font-weight:800;color:white}
+    .name{font-weight:700;font-size:14px}
+    .hint{font-size:12px;color:#9eacc1}
+    iframe{border:0;width:100%;height:calc(100% - 48px);background:#fff;flex:1}
+    noscript{padding:20px}
+  </style>
+</head>
+<body>
+<main>
+  <header><div class="mark">Z</div><div class="name">ZIM Reader</div><div class="hint">קורא קובצי ZIM בדפדפן</div></header>
+  <iframe src="https://pwa.kiwix.org/" title="Kiwix ZIM Reader" allow="fullscreen; clipboard-read; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <noscript>יש להפעיל JavaScript כדי להשתמש בקורא.</noscript>
+</main>
+</body>
+</html>
