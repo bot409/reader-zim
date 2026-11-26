@@ -3,14 +3,15 @@ name: Import and build Kiwix JS
 on:
   workflow_dispatch:
   push:
-    paths:
-      - ".github/workflows/import-kiwix.yml"
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
   import-build:
+    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, 'Import and build official Kiwix JS')
     runs-on: ubuntu-latest
     steps:
       - name: Check out this project
