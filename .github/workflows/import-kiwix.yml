@@ -52,7 +52,7 @@ jobs:
               ('/^(?:en|es|fr)$/.test(defaultBrowserLanguage.base)', '/^(?:en|es|fr|he)$/.test(defaultBrowserLanguage.base)')
           ])
           edit('service-worker.js', [
-              ('"i18n/fr.jsonp.js",', '"i18n/fr.jsonp.js", "i18n/he.jsonp.js",')
+              ("'i18n/fr.jsonp.js',", "'i18n/fr.jsonp.js', 'i18n/he.jsonp.js',")
           ])
           PY
 
